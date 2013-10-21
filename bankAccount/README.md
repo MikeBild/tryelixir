@@ -1,3 +1,3 @@
-# Eventsourcing
+# BankAccount
 
 ** TODO: Add description **
