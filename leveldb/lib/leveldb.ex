@@ -3,9 +3,12 @@ defmodule Leveldb do
 	def store do
 		{:ok, ldb} = :eleveldb.open('testdb',[{:create_if_missing, true}])
 		try do
-			:ok = :eleveldb.put ldb, <<"a">>, <<"first">>, []
-			:ok = :eleveldb.put ldb, <<"b">>, <<"second">>, []
-			:ok = :eleveldb.put ldb, <<"c">>, <<"third">>, []
+			:ok = :eleveldb.put ldb, <<"a">>, <<"1">>, []
+			:ok = :eleveldb.put ldb, <<"b">>, <<"2">>, []
+			:ok = :eleveldb.put ldb, <<"c">>, <<"3">>, []
+			:ok = :eleveldb.put ldb, <<"d">>, <<"4">>, []
+			:ok = :eleveldb.put ldb, <<"e">>, <<"5">>, []
+
 		after
 			:eleveldb.close ldb
 		end
@@ -54,11 +57,12 @@ defmodule Leveldb do
 			[] -> data = :eleveldb.iterator_move(i, from)
 			_  -> data = :eleveldb.iterator_move(i, :next)
 		end
-		n = fn
-			{:ok, key, value} -> next(i, acc ++ [{key, value}], from, to)
+
+		(fn
+			{:ok, key, value} when key != to -> next(i, acc ++ [{key, value}], from, to)
 			{:error, :invalid_iterator} -> {:ok, acc}
-		end
-		n.(data)
+			_ -> {:ok, acc}
+		end).(data)
 	end
 	
 end
