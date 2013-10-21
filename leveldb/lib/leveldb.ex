@@ -51,7 +51,7 @@ defmodule Leveldb do
 			:eleveldb.close ldb
 		end
 	end
-#key =~ to
+
 	defp next(i, acc, to) do
 		(fn
 			{:ok, key, value} when key != to -> next(i, acc ++ [{key, value}], to)
