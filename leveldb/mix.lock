@@ -1,0 +1,1 @@
+[ "eleveldb": {:git, "https://github.com/basho/eleveldb.git", "6b34c0cd6dbfae91256141cd2ed1db8501ae4bd5", []} ]
