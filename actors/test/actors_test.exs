@@ -3,11 +3,14 @@ defmodule ActorsTest do
 
   test "it response to message" do
   	actor = spawn_link(Actors, :publish, [])
-    verify_out "demo", actor
-  end
-
-  def verify_out(expected, actor) do
   	actor <- {:in, self()}
-    assert_receive {:out, ^expected}
+  	assert_receive {:out, {:msg,"demo"},{:count, 0}}
+  end
+  
+  test "it response with count 1 to messages" do
+  	actor = spawn_link(Actors, :publish, [])
+  	actor <- {:in, self()}
+  	actor <- {:in, self()}
+  	assert_receive {:out, {:msg,"demo"},{:count, 1}}
   end
 end

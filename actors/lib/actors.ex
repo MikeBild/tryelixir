@@ -6,12 +6,13 @@ defmodule Actors do
 	Publish a message.
 	"""
 	def publish do
-		receive do
-			{:in, pid} -> out(pid)
-		end
-		publish
+		publish(0)
 	end
-	def out(pid) do
-		pid <- {:out, "demo"}
+
+	def publish(count) do
+		receive do
+			{:in, pid} -> pid <- {:out, {:msg, "demo"}, {:count, count}}
+		end
+		publish(count + 1)
 	end
 end
