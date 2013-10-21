@@ -46,15 +46,15 @@ defmodule Leveldb do
 		try do
 			{:ok, i} = :eleveldb.iterator ldb, []
 			{:ok, key, value} = :eleveldb.iterator_move(i, from)
-			next i, [] ++ [{key, value}], from, to
+			next i, [] ++ [{key, value}], to
 		after
 			:eleveldb.close ldb
 		end
 	end
-
-	defp next(i, acc, from, to) do
+#key =~ to
+	defp next(i, acc, to) do
 		(fn
-			{:ok, key, value} when key != to -> next(i, acc ++ [{key, value}], from, to)
+			{:ok, key, value} when key != to -> next(i, acc ++ [{key, value}], to)
 			_ -> {:ok, acc}
 		end).(:eleveldb.iterator_move(i, :next))
 	end
