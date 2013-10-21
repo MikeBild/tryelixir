@@ -45,24 +45,18 @@ defmodule Leveldb do
 		{:ok, ldb} = :eleveldb.open('testdb',[{:create_if_missing, true}])
 		try do
 			{:ok, i} = :eleveldb.iterator ldb, []
-			
-			next i, [], from, to
+			{:ok, key, value} = :eleveldb.iterator_move(i, from)
+			next i, [] ++ [{key, value}], from, to
 		after
 			:eleveldb.close ldb
 		end
 	end
 
 	defp next(i, acc, from, to) do
-		case acc do
-			[] -> data = :eleveldb.iterator_move(i, from)
-			_  -> data = :eleveldb.iterator_move(i, :next)
-		end
-
 		(fn
 			{:ok, key, value} when key != to -> next(i, acc ++ [{key, value}], from, to)
-			{:error, :invalid_iterator} -> {:ok, acc}
 			_ -> {:ok, acc}
-		end).(data)
+		end).(:eleveldb.iterator_move(i, :next))
 	end
 	
 end
