@@ -22,7 +22,7 @@ defmodule BankAccount do
 		events ++ [{:deposit, amount}]
 	end
 	defp withdraw(amount, events) do
-		events ++ [{:withdraw, amount}]
+		events ++ [{:withdraw, 0-amount}]
 	end
 
 end
