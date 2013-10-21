@@ -12,4 +12,10 @@ defmodule LeveldbTest do
   	data = Leveldb.all
     assert data == [{"a", "first"}, {"b", "second"}, {"c", "third"}]
   end
+
+  test "all with start key should return 'second, third'" do
+    Leveldb.store
+    data = Leveldb.all <<"b">>
+    assert data == [{"b", "second"}, {"c", "third"}]
+  end
 end

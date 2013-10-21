@@ -23,9 +23,19 @@ defmodule Leveldb do
 	def all do
 		{:ok, ldb} = :eleveldb.open('testdb',[{:create_if_missing, true}])
 		try do
-			:eleveldb.fold ldb, fn(n, acc)-> acc ++ [n] end, [], [{:first_key, <<"">>}]
+			:eleveldb.fold ldb, fn(n, acc)-> acc ++ [n] end, [], []
 		after
 			:eleveldb.close ldb
 		end
 	end
+
+	def all(start) do
+		{:ok, ldb} = :eleveldb.open('testdb',[{:create_if_missing, true}])
+		try do
+			:eleveldb.fold ldb, fn(n, acc)-> acc ++ [n] end, [], [{:first_key, start}]
+		after
+			:eleveldb.close ldb
+		end
+	end
+	
 end
