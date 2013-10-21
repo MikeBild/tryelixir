@@ -19,4 +19,11 @@ defmodule BankAccountTest do
     account <- {:checkBalance, self()}
     assert_receive {:ok, 20}
   end
+  test "deposit 10 and withdraw 10 should return 0" do
+    account = spawn_link(BankAccount, :start, [])
+    account <- {:deposit, 10}
+    account <- {:withdraw, -10}
+    account <- {:checkBalance, self()}
+    assert_receive {:ok, 0}
+  end
 end

@@ -8,6 +8,7 @@ defmodule BankAccount do
 		receive do
 			{:checkBalance, pid} -> checkBalance(pid, events)
 			{:deposit, amount} -> events = deposit(amount, events)
+			{:withdraw, amount} -> events = withdraw(amount, events)
 		end
 		await(events)
 	end
@@ -19,6 +20,9 @@ defmodule BankAccount do
 
 	defp deposit(amount, events) do
 		events ++ [{:deposit, amount}]
+	end
+	defp withdraw(amount, events) do
+		events ++ [{:withdraw, amount}]
 	end
 
 end
