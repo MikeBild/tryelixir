@@ -1,20 +1,37 @@
 defmodule KataTennis do
 	use GenServer.Behaviour
 
+	#public API
+	def start(items) do
+	  	{:ok, game} = :gen_server.start_link KataTennis, items, []
+	  	game
+	end
+
+	def score(game, player) do
+		:gen_server.cast(game, {:score, player})
+	end
+
+	def evaluate(game) do
+		:gen_server.call(game, {:evaluate})
+	end
+
+
+	#GenServer API
+
 	def init(items) do
 		{:ok, items }
 	end
 
-	def handle_call({:score, item}, _from, items) do
-		{:reply, :ok, items ++ [item] }
+	def handle_cast({:score, item}, items) do
+		{:noreply, items ++ [item] }
 	end
 
 	def handle_call({:evaluate}, _from, items) do
-		result = Enum.reduce(items, {{:playerA, 0}, {:playerB, 0}, {:scoresA, 0}, {:scoresB, 0}}, fn(n, acc) -> sum(n, acc) end)
+		result = Enum.reduce(items, {{:playerA, 0}, {:playerB, 0}, {:scoresA, 0}, {:scoresB, 0}}, fn(n, acc) -> evaluate(n, acc) end)
 		{:reply, {:ok, result}, items}
 	end
 
-	defp sum(n, acc) do
+	defp evaluate(n, acc) do
 		scoreCard = ["0","15","30","40","adv","won"]
 		{{:playerA, a}, {:playerB, b}, {:scoresA, _}, {:scoresB, _}} = acc
 		case acc do

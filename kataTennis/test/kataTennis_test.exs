@@ -1,33 +1,80 @@
 defmodule KataTennisTest do
   use ExUnit.Case
 
-  test "start should return :ok" do
-  	{:ok, game} = :gen_server.start_link KataTennis, [], []
-  	assert :ok == :gen_server.call(game, {:score, :playerA})
-  end
-
   test "playerA should scored" do
-  	{:ok, game} = :gen_server.start_link KataTennis, [], []
-  	:gen_server.call(game, {:score, :playerA})
-  	assert {:ok, {{:playerA, 1}, {:playerB, 0}, {:scoresA, "15"}, {:scoresB, "0"}}} == :gen_server.call(game, {:evaluate})
+  	game = KataTennis.start([])
+  	KataTennis.score(game, :playerA)
+  	assert {:ok, {{:playerA, 1}, {:playerB, 0}, {:scoresA, "15"}, {:scoresB, "0"}}} == KataTennis.evaluate(game)
   end
 
-    test "playerA should win" do
-  	{:ok, game} = :gen_server.start_link KataTennis, [], []
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerB})
-  	:gen_server.call(game, {:score, :playerB})
-  	:gen_server.call(game, {:score, :playerB})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerB})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerA})
-  	:gen_server.call(game, {:score, :playerA})
+  test "playerB should win" do
+  	game = KataTennis.start([])
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
 
-  	assert {:ok, {{:playerA, 5}, {:playerB, 3}, {:scoresA, "won"}, {:scoresB, "40"}}} == :gen_server.call(game, {:evaluate})
+  	assert {:ok, {{:playerA, 2}, {:playerB, 5}, {:scoresA, "30"}, {:scoresB, "won"}}} == KataTennis.evaluate(game)
+  end
+
+  test "playerA should win" do
+  	game = KataTennis.start([])
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+
+  	assert {:ok, {{:playerA, 5}, {:playerB, 2}, {:scoresA, "won"}, {:scoresB, "30"}}} == KataTennis.evaluate(game)
+  end
+
+  test "deuce" do
+  	game = KataTennis.start([])
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+
+  	assert {:ok, {{:playerA, 3}, {:playerB, 3}, {:scoresA, "40"}, {:scoresB, "40"}}} == KataTennis.evaluate(game)
+  end
+
+  test "playerA adv should win" do
+  	game = KataTennis.start([])
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+
+  	assert {:ok, {{:playerA, 5}, {:playerB, 3}, {:scoresA, "won"}, {:scoresB, "40"}}} == KataTennis.evaluate(game)
+  end
+
+  test "no transitions after won" do
+  	game = KataTennis.start([])
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerB)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+  	KataTennis.score(game, :playerA)
+
+  	assert {:ok, {{:playerA, 5}, {:playerB, 3}, {:scoresA, "won"}, {:scoresB, "40"}}} == KataTennis.evaluate(game)
   end
 end
