@@ -12,8 +12,15 @@ defmodule KataTennisFSMFSMTest do
   	KataTennisFSM.score(game, :playerB)
   	KataTennisFSM.score(game, :playerB)
   	assert {{:A, 3}, {:B, 2}} == KataTennisFSM.score(game, :playerA)
-  	assert {{:A, 3}, {:B, 3}} == KataTennisFSM.score(game, :playerB)
-  	assert {{:A, 4}, {:B, 3}} == KataTennisFSM.score(game, :playerA)
   end
 
+ test "3, 3 should deuce" do
+  	game = KataTennisFSM.start()
+  	KataTennisFSM.score(game, :playerA)
+  	KataTennisFSM.score(game, :playerA)
+  	KataTennisFSM.score(game, :playerB)
+  	KataTennisFSM.score(game, :playerB)
+  	assert {{:A, 3}, {:B, 2}} == KataTennisFSM.score(game, :playerA)
+  	assert :deuce == KataTennisFSM.score(game, :playerB)
+  end
 end

@@ -19,12 +19,22 @@ defmodule KataTennisFSM do
 	def score(:playerA, _from, state_data) do
 		{{:A, a}, {:B, b}} = state_data
 		state_data = {{:A, a+1}, {:B, b}}
-		{:reply, state_data, :score, state_data}
+		case state_data do
+			{{:A, a}, {:B, b}} when a===3 and b===3 -> {:reply, :deuce, :deuce, state_data}
+			{{:A, a}, {:B, b}} -> {:reply, state_data, :score, state_data}
+		end
 	end
 
 	def score(:playerB, _from, state_data) do
 		{{:A, a}, {:B, b}} = state_data
 		state_data = {{:A, a}, {:B, b+1}}
-		{:reply, state_data, :score, state_data}
+		case state_data do
+			{{:A, a}, {:B, b}} when a===3 and b===3 -> {:reply, :deuce, :deuce, state_data}
+			{{:A, a}, {:B, b}} -> {:reply, state_data, :score, state_data}
+		end
+	end
+
+	def deuce(:deuce, _from, state_data) do
+ 		{:reply, state_data, :score, state_data}
 	end
 end
