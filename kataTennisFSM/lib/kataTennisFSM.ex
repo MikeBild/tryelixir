@@ -7,14 +7,10 @@ defmodule KataTennisFSM do
 		game
 	end
 
-	def score(game, player) do
-		:gen_fsm.sync_send_event(game, player)
-	end
+	def score(game, player), do: :gen_fsm.sync_send_event(game, player)
 
 	#GenFSM API
-	def init(_) do
-		{:ok, :score, {{:A, 0}, {:B, 0}}}
-	end
+	def init(_), do: {:ok, :score, {{:A, 0}, {:B, 0}}}
 
 	def score(:playerA, _from, state_data) do
 		{{:A, a}, {:B, b}} = state_data
