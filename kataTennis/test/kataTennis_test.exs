@@ -44,37 +44,12 @@ defmodule KataTennisTest do
   end
 
   test "playerA adv should win" do
-  	game = KataTennis.start([])
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-
+  	game = KataTennis.start([:playerA, :playerA, :playerA, :playerB, :playerB, :playerB, :playerA, :playerB, :playerA, :playerB, :playerA, :playerA])
   	assert {:ok, {{:playerA, 5}, {:playerB, 3}, {:scoresA, "won"}, {:scoresB, "40"}}} == KataTennis.evaluate(game)
   end
 
   test "no transitions after won" do
-  	game = KataTennis.start([])
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-
+  	game = KataTennis.start([:playerA, :playerA, :playerA, :playerB, :playerB, :playerB,:playerA, :playerA, :playerA, :playerA, :playerA, :playerA])
   	assert {:ok, {{:playerA, 5}, {:playerB, 3}, {:scoresA, "won"}, {:scoresB, "40"}}} == KataTennis.evaluate(game)
   end
 end
