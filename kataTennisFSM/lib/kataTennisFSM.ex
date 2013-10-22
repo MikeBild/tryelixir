@@ -26,13 +26,11 @@ defmodule KataTennisFSM do
 		evaluate {{:A, a}, {:B, b+1}}
 	end
 
-	def deuce(:playerA, _from, state_data) do
+	def deuce(:playerA, _from, state_data), do:
  		{:reply, {{:A, :adv}, {:B, 3}}, :score, state_data}
-	end
 
-	def deuce(:playerB, _from, state_data) do
+	def deuce(:playerB, _from, state_data), do:
  		{:reply, {{:A, 3}, {:B, :adv}}, :score, state_data}
-	end
 
 	defp evaluate({{:A, a}, {:B, b}}) when a==3 and b==3, do: {:reply, :deuce, :deuce, {{:A, a}, {:B, b}}}
 
