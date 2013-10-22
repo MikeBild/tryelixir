@@ -34,10 +34,10 @@ defmodule KataTennisFSM do
  		{:reply, {{:A, 3}, {:B, :adv}}, :score, state_data}
 	end
 
-	def evaluate({{:A, a}, {:B, b}}) when a==3 and b==3 do
+	defp evaluate({{:A, a}, {:B, b}}) when a==3 and b==3 do
 		 {:reply, :deuce, :deuce, {{:A, a}, {:B, b}}}
 	end
-	def evaluate(state_data) do
+	defp evaluate(state_data) do
 		{:reply, state_data, :score, state_data}
 	end
 end
