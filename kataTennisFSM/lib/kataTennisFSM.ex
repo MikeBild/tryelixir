@@ -18,14 +18,12 @@ defmodule KataTennisFSM do
 
 	def score(:playerA, _from, state_data) do
 		{{:A, a}, {:B, b}} = state_data
-		state_data = {{:A, a+1}, {:B, b}}
-		evaluate(state_data)
+		{{:A, a+1}, {:B, b}} |> evaluate
 	end
 
 	def score(:playerB, _from, state_data) do
 		{{:A, a}, {:B, b}} = state_data
-		state_data = {{:A, a}, {:B, b+1}}
-		evaluate(state_data)
+		{{:A, a}, {:B, b+1}} |> evaluate
 	end
 
 	def deuce(:playerA, _from, state_data) do
