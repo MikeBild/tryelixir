@@ -32,14 +32,7 @@ defmodule KataTennisTest do
   end
 
   test "deuce" do
-  	game = KataTennis.start([])
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerA)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerB)
-  	KataTennis.score(game, :playerB)
-
+  	game = KataTennis.start([:playerA, :playerA, :playerA, :playerB, :playerB, :playerB])
   	assert {:ok, {{:playerA, 3}, {:playerB, 3}, {:scoresA, "40"}, {:scoresB, "40"}}} == KataTennis.evaluate(game)
   end
 
