@@ -11,10 +11,6 @@ defmodule KataTennisFSM do
 		:gen_fsm.sync_send_event(game, player)
 	end
 
-	def evaluate(game) do
-		:gen_fsm.sync_send_event(game)
-	end
-
 	#GenFSM API
 	def init(_) do
 		{:ok, :score, {{:A, 0}, {:B, 0}}}
