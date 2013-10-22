@@ -27,8 +27,9 @@ defmodule KataTennis do
 	end
 
 	def handle_call({:evaluate}, _from, items) do
-		result = Enum.reduce(items, {{:playerA, 0}, {:playerB, 0}, {:scoresA, 0}, {:scoresB, 0}}, fn(n, acc) -> evaluate(n, acc) end)
-		{:reply, {:ok, result}, items}
+		items
+		|> Enum.reduce({{:playerA, 0}, {:playerB, 0}, {:scoresA, 0}, {:scoresB, 0}}, evaluate(&1, &2))
+		|> (& {:reply, {:ok, &1}, items}).()
 	end
 
 	defp evaluate(n, acc) do
