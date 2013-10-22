@@ -1,7 +1,7 @@
 defmodule KataTennisTest do
   use ExUnit.Case
 
-  test "playerA should scored" do
+  test "playerA should score" do
   	game = KataTennis.start([])
   	KataTennis.score(game, :playerA)
   	assert {:ok, {{:playerA, 1}, {:playerB, 0}, {:scoresA, "15"}, {:scoresB, "0"}}} == KataTennis.evaluate(game)
