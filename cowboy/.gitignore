@@ -1,0 +1,5 @@
+/ebin
+/deps
+/logs
+erl_crash.dump
+*.ez
