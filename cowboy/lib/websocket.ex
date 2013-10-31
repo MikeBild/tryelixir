@@ -6,6 +6,7 @@ defmodule Websocket do
       {"/ws", Websocket.WsHandler, []},
       {"/simple", Websocket.SimpleStaticHandler, []},
       {"/hello", Websocket.HelloHandler, []},
+      {"/json", Websocket.JsonHandler, []},
       { "/", :cowboy_static, [ directory: {:priv_dir, :websocket, []}, file: "index.html", mimetypes: {&:mimetypes.path_to_mimes/2, :default}]}
     ]}])
     

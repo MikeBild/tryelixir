@@ -22,7 +22,8 @@ defmodule Websocket.Mixfile do
     [
       {:cowboy, github: "extend/cowboy"},
       {:mimetypes, github: "spawngrid/mimetypes"},
-      {:lager, github: "basho/lager" }
+      {:lager, github: "basho/lager" },
+      {:json, github: "cblage/elixir-json"}
     ]
   end
 end

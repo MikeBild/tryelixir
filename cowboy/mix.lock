@@ -1,6 +1,7 @@
 [ "cowboy": {:git, "git://github.com/extend/cowboy.git", "faf64524c6758ae1e27404d2ae1383a23538c538", []},
   "cowlib": {:git, "git://github.com/extend/cowlib.git", "85b695c177da63f8b2651c88f8bc43ee511c4509", [{:ref, "0.2.0"}]},
   "goldrush": {:git, "git://github.com/DeadZen/goldrush.git", "879c69874a555b2c13498aa4a3da6f6bbbb6a031", [{:tag, "879c69874a"}]},
+  "json": {:git, "git://github.com/cblage/elixir-json.git", "d9ce58c27cdda4ac113b0541e11f7845d47fc134", []},
   "lager": {:git, "git://github.com/basho/lager.git", "822062478a223313dce30e5a45e30a50a4b7dc4e", []},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", []},
   "ranch": {:git, "git://github.com/extend/ranch.git", "41705752ffc7e3ecb96eef8374015ead4ca7f699", [{:ref, "0.8.5"}]} ]
