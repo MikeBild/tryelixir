@@ -10,7 +10,7 @@ defmodule Websocket.WsHandler do
   
   defp send_messages(process) do
     Process.spawn(fn() ->
-      Enum.each(1..10, fn(index) ->
+      Enum.each(1..100, fn(index) ->
         :timer.sleep(:timer.seconds(1))
         process <- {:message, "generated message #{index}"}
       end)

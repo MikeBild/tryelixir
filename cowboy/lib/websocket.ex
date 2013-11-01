@@ -7,17 +7,14 @@ defmodule Websocket do
       {"/simple", Websocket.SimpleStaticHandler, []},
       {"/hello", Websocket.HelloHandler, []},
       {"/json", Websocket.JsonHandler, []},
-      { "/", :cowboy_static, [ directory: {:priv_dir, :websocket, []}, file: "index.html", mimetypes: {&:mimetypes.path_to_mimes/2, :default}]}
+      { "/index", :cowboy_static, [ directory: {:priv_dir, :cowboy, []}, file: "index.html", mimetypes: {&:mimetypes.path_to_mimes/2, :default}]},
+      {:_, Websocket.AllHandler, []}
     ]}])
     
     :cowboy.start_http(:http, 100, [port: 8080], [env: [dispatch: dispatch]])
     IO.puts "Started listening on port 8080..."
 
     Websocket.Supervisor.start_link
-  end
-
-  def stop(_state) do
-    :ok
   end
 
   def exit do
